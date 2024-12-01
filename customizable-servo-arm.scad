@@ -194,34 +194,47 @@ module servo_arm(params, gap = servo_head_gap) {
     head_thickness = head[2];
     head_screw_diameter = head[3];
 
-    if(arm_count > 0)
+    difference()
     {
-        for(i=[0:360/arm_count:360]) {
-            rotate([0,0,i]) {
-                difference() {
-                    hull() {
-                        cylinder(r = head_diameter/2 + head_thickness + 0.5, h = arm_thickness);
-                        translate([arm_length,0,0]) cylinder(d=3*arm_hole_diameter, h=arm_thickness);
+        union()
+        {
+            if(arm_count > 0)
+            {
+                for(i=[0:360/arm_count:360]) {
+                    rotate([0,0,i]) {
+                        difference() {
+                            hull() {
+                                cylinder(r = head_diameter/2 + head_thickness + 0.5, h = arm_thickness);
+                                translate([arm_length,0,0]) cylinder(d=3*arm_hole_diameter, h=arm_thickness);
+                            }
+                            //cut for servo_adapter
+                            cylinder(r = head_diameter/2 + head_thickness - 0.1, h = arm_thickness);
+                            //holes
+                            hole_count = (arm_length-(head_diameter/2+head_thickness+head_heigth))/arm_hole_distance;
+                            for(j=[0:hole_count]) {
+                                translate([arm_length-j*arm_hole_distance,0,0]) 
+                                    cylinder(d=arm_hole_diameter, h=arm_thickness);
+                            }
+                        }
+                        //support
+                        translate([head_diameter/2+head_thickness-0.7,-0.75,arm_thickness]) hull() {
+                            cube([head_diameter/2 + head_thickness, 1.5, 0.1]); 
+                            cube([0.1, 1.5, head_heigth+1-arm_thickness]); 
+                        }
+                        //text
+                        translate([head_diameter/2+head_thickness,0.75,arm_thickness]) 
+                                linear_extrude(0.2) text(text=servo_preset,size=2);
                     }
-                    //cut for servo_adapter
-                    cylinder(r = head_diameter/2 + head_thickness - 0.1, h = arm_thickness);
-                    //holes
-                    hole_count = (arm_length-(head_diameter/2+head_thickness+head_heigth))/arm_hole_distance;
-                    for(j=[0:hole_count]) {
-                        translate([arm_length-j*arm_hole_distance,0,0]) 
-                            cylinder(d=arm_hole_diameter, h=arm_thickness);
-                    }
-                }
-                //support
-                translate([head_diameter/2+head_thickness-0.7,-0.75,arm_thickness]) hull() {
-                    cube([head_diameter/2 + head_thickness, 1.5, 0.1]); 
-                    cube([0.1, 1.5, head_heigth+1-arm_thickness]); 
                 }
             }
+            //servo adapter in the middle
+            servo_adapter(params, gap);
         }
+        //text
+        translate([head_screw_diameter/2+0.2,0,0]) 
+            mirror([0,1,0]) 
+                linear_extrude(0.2) text(text=servo_preset,size=2,valign="center");
     }
-    //servo adapter in the middle
-    servo_adapter(params, gap);
 }
 
 
