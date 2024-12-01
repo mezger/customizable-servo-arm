@@ -45,7 +45,7 @@ arm_hole_distance = 4;
 servo_head_gap = 0.1;
 
 // Select the type of servo here. For further info see README.md
-servo_preset="3F"; // [3F:FUTABA 3F Standard Spline (25T), 2F:FUTABA 2F Spline (21T), 1F:FUTABA 1F Spline (15T), A1:HITEC A1 Sub-micro Spline (15T), SG90:SG90 9g Micro Servo Spline (21T)]
+servo_preset="3F"; // [3F:FUTABA 3F Standard Spline (25T), 2F:FUTABA 2F Spline (21T), 1F:FUTABA 1F Spline (15T), A1:HITEC A1 Sub-micro Spline (15T), SG90:SG90 9g Micro Servo Spline (21T), DMO:Demo of all servo presets]
 
 
 /* [Hidden] */
@@ -185,7 +185,7 @@ module servo_adapter(params, gap = servo_head_gap) {
 /**
  *  Servo arm
  */
-module servo_arm(params, gap = servo_head_gap) {
+module servo_arm(params, gap = servo_head_gap, preset = servo_preset, arm_count = arm_count, arm_length = arm_length) {
     head = params[0];
     tooth = params[1];
 
@@ -203,7 +203,7 @@ module servo_arm(params, gap = servo_head_gap) {
                         cylinder(r = head_diameter/2 + head_thickness + 0.5, h = arm_thickness);
                         translate([arm_length,0,0]) cylinder(d=3*arm_hole_diameter, h=arm_thickness);
                     }
-                    //cut for servo_adapter
+                    //cut-out for servo_adapter
                     cylinder(r = head_diameter/2 + head_thickness - 0.1, h = arm_thickness);
                     //holes
                     hole_count = (arm_length-(head_diameter/2+head_thickness+head_heigth))/arm_hole_distance;
@@ -219,7 +219,7 @@ module servo_arm(params, gap = servo_head_gap) {
                 }
                 //text
                 translate([head_diameter/2+head_thickness,0.75,arm_thickness]) 
-                        linear_extrude(0.2) text(text=servo_preset,size=2);
+                        linear_extrude(0.2) text(text=preset,size=2);
             }
         }
     }
@@ -233,6 +233,13 @@ if(servo_preset=="2F") servo_arm(FUTABA_2F_SPLINE, servo_head_gap);
 if(servo_preset=="1F") servo_arm(FUTABA_1F_SPLINE, servo_head_gap);
 if(servo_preset=="A1") servo_arm(A15T_A1_SPLINE, servo_head_gap);
 if(servo_preset=="SG90") servo_arm(SG90_SPLINE, servo_head_gap);
+if(servo_preset=="DMO") {
+    translate([0,15,0]) servo_arm(FUTABA_3F_SPLINE, servo_head_gap, "3F", 1, 25);
+    translate([-10,30,0]) servo_arm(FUTABA_2F_SPLINE, servo_head_gap, "2F", 3, 15);
+    translate([30,35,0]) servo_arm(FUTABA_1F_SPLINE, servo_head_gap, "1F", 5, 20);
+    translate([0,55,0]) servo_arm(A15T_A1_SPLINE, servo_head_gap, "3F", 4, 15);
+    translate([0,0,0]) servo_arm(SG90_SPLINE, servo_head_gap, "SG90", 2, 17);
+}
 
 
 
