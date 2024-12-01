@@ -237,7 +237,7 @@ if(servo_preset=="DMO") {
     translate([0,15,0]) servo_arm(FUTABA_3F_SPLINE, servo_head_gap, "3F", 1, 25);
     translate([-10,30,0]) servo_arm(FUTABA_2F_SPLINE, servo_head_gap, "2F", 3, 15);
     translate([30,35,0]) servo_arm(FUTABA_1F_SPLINE, servo_head_gap, "1F", 5, 20);
-    translate([0,55,0]) servo_arm(A15T_A1_SPLINE, servo_head_gap, "3F", 4, 15);
+    translate([0,55,0]) servo_arm(A15T_A1_SPLINE, servo_head_gap, "A1", 4, 15);
     translate([0,0,0]) servo_arm(SG90_SPLINE, servo_head_gap, "SG90", 2, 17);
 }
 
