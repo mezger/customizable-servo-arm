@@ -77,7 +77,7 @@ This is for Micro Servos like the NoName SG90 9g Micro Servo.
 
 ### SG90TP (21 teeth)
 
-This is for Micro Servos like the Tower Pro SG90 9g Micro Servo or MG90S Micro Servo (with metal gear).
+This is for Micro Servos like the Tower Pro SG90 9g Micro Servo or Tower Pro MG90S Micro Servo (with metal gear).
 
 ## Further info
 
