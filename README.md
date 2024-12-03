@@ -7,7 +7,7 @@ A customizable servo-arm generator in OpenSCAD for generating servo-arm models f
 
 A customizable OpenSCAD model to generate a servo arm that exactly fits your needs.
 
-It is based on the work by [Paul Barrett](https://github.com/hugokernel/OpenSCAD_ServoArms) and [Charles Rincheval](https://www.thingiverse.com/thing:630862). I added the splines for SG90 and HITEC A1 servos, and reworked the layout of arm and support.
+It is based on the work by [Paul Barrett](https://github.com/hugokernel/OpenSCAD_ServoArms) and [Charles Rincheval](https://www.thingiverse.com/thing:630862). I added the splines for SG90, SG90TP and HITEC A1 servos, and reworked the layout of arm and support.
 
 ## Usage
 
@@ -45,9 +45,13 @@ The gap between arm and servo head. This value depends on your printer and the m
 
 ## Servo splines
 
+The Futaba 3F spline is the most common spline for standard servos. It fits a large variety of servos and brands.
+
+For the 9g micro servos called SG90, I learned that there exist at least two different sizes of the servo head. A Tower Pro SG90 servo has a smaller diameter of the servo head then all the other NoName SG90 servos I own. So I designed splines for both sizes, called SG90 for the bigger NoName (4.9mm diameter) and SG90TP for the smaller sized Tower Pro (4.7mm diameter) variant.
+
 ### Futaba 3F (25 teeth)
 
-This is the most commonly used servo spline for "standard" servos. Futaba 3F is identical to Hitec H25T. A lot of servos from D-POWER and SAVOX use this spline, too.
+This is the most commonly used servo spline for "standard" servos. Futaba 3F is identical to Hitec H25T.
 
 * MG 996R
 
@@ -69,7 +73,11 @@ Micro servos like S3153, S3107, S117
 
 ### SG90 (21 teeth)
 
-This is for Micro Servos like the Tower Pro SG90 9g Micro Servo or MG90S Micro Servo.
+This is for Micro Servos like the NoName SG90 9g Micro Servo.
+
+### SG90TP (21 teeth)
+
+This is for Micro Servos like the Tower Pro SG90 9g Micro Servo or MG90S Micro Servo (with metal gear).
 
 ## Further info
 
